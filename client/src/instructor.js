@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import { Button, ButtonToolbar, Container, List } from "rsuite";
 import { count } from "rsuite/esm/utils/ReactChildren";
-var studQs = [
-	{ endpoint: 'america' },
-	{ endpoint: 'canada' },
-	{ endpoint: 'norway' },
-	{ endpoint: 'bahamas' }
-];
-
+import DataCalls from "./service";
 class instructor extends Component {
 	constructor(props) {
 		super(props);
@@ -18,15 +12,29 @@ class instructor extends Component {
 			course: "test",
 			instructor: "test",
 			date: this.getCurrentDate(),
-			currentQuestion: this.getCurrentQuestions()
+			currentQuestion: this.getCurrentQuestions(),
+			studentQs: this.getStudentQs()
 			//TODO: popup letting you know that you will get a notification
 		};
+		this.dataCalls = new DataCalls();
 		this.QColor = this.QColor();
+		
+		this.onRemove = this.onRemove.bind(this);
 	}
 
-	getCurrentQuestions() {
-		return 'This is a placeholder for the current question'
+	componentDidMount() {
+		this.getStudentQs();
+		
 	}
+	async getStudentQs() {
+		return await this.dataCalls.postGet();
+		 //return await fetch(response from server).then(whatever we want to call this => whatever.json()) //assuming we pass in json
+	}
+	getCurrentQuestions() {
+		return 'This is a placeholder for the current question';
+	}
+
+
 
 	getCurrentDate(separator = '/') {
 
@@ -45,27 +53,20 @@ class instructor extends Component {
 		if (count === 1) return "rgb(251, 236, 167)"
 		else return "rgb(246, 246, 246)"
 	}
-	removeItem(index) {
-		const remove = (index) => {
-			var newList = studQs
-			newList.splice(index, 1)
-			this.setList(newList);
-		};
+
+	onRemove(endpoint) {
+		this.setState((state, props) => {
+			const newList = this.state.studentQs.filter(item => item.endpoint !== endpoint);
+			return {studentQs: newList}
+		})
 	}
+	
 	render() {
-		const listItems = studQs.map((link) =>
-			<li key={link.endpoint}>
+		const listItems = this.state.studentQs ? this.state.studentQs.map((link) =>
+			<li key={link.endpoint} >
 				{link.endpoint}
 				<ButtonToolbar>
-					<Button style={{
-						backgroundColor: "rgb(39,94,37)",
-						color: "white",
-						border: "none",
-						borderRadius: "8px"
-					}}>
-						Clarify
-					</Button>
-					<Button style={{
+					<Button onClick={() => this.onRemove(link.endpoint)} style={{
 						backgroundColor: "rgb(39,94,37)",
 						color: "white",
 						border: "none",
@@ -76,7 +77,7 @@ class instructor extends Component {
 					</Button>
 				</ButtonToolbar>
 			</li >
-		);
+		) : <div>Loading</div>;
 		return (
 			<div>
 				<Container
