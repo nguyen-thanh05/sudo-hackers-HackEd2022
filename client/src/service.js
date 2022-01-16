@@ -5,7 +5,7 @@ class DataCalls {
 		this.url = "http://localhost:3001/prof/";
 	}
 
-	async getData() {
+	async postData() {
 		let url = `${this.url}`;
 		const response = await axios.post(url);
 		console.log(response);
