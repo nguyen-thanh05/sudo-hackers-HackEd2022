@@ -10,6 +10,7 @@ class student extends Component {
             instructor: "test",
             date: this.getCurrentDate(),
             currentQuestion: this.getCurrentQuestion(),
+            yourQuestion: this.getYourQuestion(),
             showForm: false,
             showAskButton: true
             
@@ -22,6 +23,9 @@ class student extends Component {
 
     getCurrentQuestion() {
         return 'This is a placeholder for the current question'
+    }
+    getYourQuestion() {
+        return null;
     }
     getCurrentDate(separator='/'){
 
@@ -43,7 +47,9 @@ class student extends Component {
     }
     
 	render() {
+        
 		return (
+            
 			<div>
                 <Container
                     style={{backgroundColor: "rgb(39, 94, 57)"}}
@@ -73,7 +79,7 @@ class student extends Component {
                         {this.state.date}
                     </div>
                 </Container>
-                <Container fixed>
+                <Container>
                     <div style = {{
                         paddingLeft:20,
                         paddingTop:10,
@@ -93,7 +99,55 @@ class student extends Component {
                     }}>
                         {this.state.currentQuestion} 
                     </div>
+
+                    <div style = {{
+                        paddingLeft:50,
+                        paddingTop:10,
+                        textAlign: "left",
+                        fontSize: "18px",
+                        
+                    }}>
+                        Clarification placeholder 
+                    </div>
                 </Container>
+                    
+                    <div style = {{
+                        paddingLeft:20,
+                        paddingTop:50,
+                        textAlign: "left",
+                        fontSize: "22px",
+                        fontStyle: "italic"
+                    }}>
+                        Your Question: 
+                    </div>
+
+                    <div style = {
+                        this.state.yourQuestion == null ? 
+                            {
+                                paddingLeft:30,
+                                paddingTop:10,
+                                textAlign: "left",
+                                fontSize: "20px",
+                                fontStyle: "italic",
+                                color: "rgb(192, 192, 192)"
+                            }
+                            
+                            : { 
+                                paddingLeft:30,
+                                paddingTop:10,
+                                textAlign: "left",
+                                fontSize: "25px",
+                                fontWeight: "bold"
+                            }
+                    }>
+                        {this.state.yourQuestion == null ? "Your question will be displayed here" : this.state.yourQuestion}
+                    </div>
+
+                    
+                <Container>
+
+                </Container>
+
                 <Button
                     onClick = {this.handleAskQuestionButtonClick}
                     open = {this.state.showAskButton}
