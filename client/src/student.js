@@ -52,7 +52,7 @@ class student extends Component {
                         paddingBottom:5,
                         textAlign: "center",
                         color: "white",
-                        fontSize: "14px"
+                        fontSize: "16px"
                     }}>
                         Course: {this.state.course}
                     </div>
@@ -60,7 +60,7 @@ class student extends Component {
                         paddingBottom:5,
                         textAlign: "center",
                         color: "white",
-                        fontSize: "14px"
+                        fontSize: "16px"
                     }}>
                         Instructor: {this.state.instructor}
                     </div>
@@ -68,7 +68,7 @@ class student extends Component {
                         paddingBottom:5,
                         textAlign: "center",
                         color: "white",
-                        fontSize: "14px"
+                        fontSize: "16px"
                     }}>
                         {this.state.date}
                     </div>
@@ -78,7 +78,7 @@ class student extends Component {
                         paddingLeft:20,
                         paddingTop:10,
                         textAlign: "left",
-                        fontSize: "20px",
+                        fontSize: "22px",
                         fontStyle: "italic"
                     }}>
                         Current Question: 
@@ -88,7 +88,7 @@ class student extends Component {
                         paddingLeft:30,
                         paddingTop:10,
                         textAlign: "left",
-                        fontSize: "22px",
+                        fontSize: "25px",
                         fontWeight: "bold"
                     }}>
                         {this.state.currentQuestion} 
@@ -105,7 +105,7 @@ class student extends Component {
                             borderRadius: "8px",
                             backgroundColor: "rgb(39, 94, 57)",
                             color: "white",
-                            fontSize: "18px",
+                            fontSize: "20px",
                             padding: "12px"
                         } : {display: 'none'}
                     }
@@ -114,9 +114,25 @@ class student extends Component {
                 </Button>
 
                 
-                <Modal full open={this.state.showForm} onClose={this.handleClose} style = {{position: "fixed", bottom: 15}}>
+                <Modal full open={this.state.showForm} onClose={this.handleClose} style = {{position: "fixed", bottom: 25}}>
                     <Modal.Body>
-                        <p>test</p>
+                        <Form fluid>
+                            <Form.Group controlId="question">
+                            <Form.ControlLabel style = {{
+                                paddingLeft:20,
+                                paddingBottom:20,
+                                textAlign: "left",
+                                fontSize: "22px",
+                                fontStyle: "italic"
+                            }}>Ask your question here</Form.ControlLabel>
+                            <Form.Control name="question" style = {{
+                                padding: 7.5,
+                                fontSize: "20px",
+                                display:"block",
+                                margin:"10px"
+                            }}/>
+                        </Form.Group>
+                        </Form>
                     </Modal.Body>
         
                     <Modal.Footer style = {{position: "fixed", bottom: 15, right: 15}}>
