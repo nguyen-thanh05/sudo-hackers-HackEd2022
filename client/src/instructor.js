@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, ButtonToolbar, Container } from "rsuite";
+import { Button, ButtonToolbar, Container, List } from "rsuite";
 import { count } from "rsuite/esm/utils/ReactChildren";
 var studQs = [
 	{ endpoint: 'america' },
@@ -14,10 +14,28 @@ class instructor extends Component {
 		this.state = {
 			headerStr: "Class of \n Date: \n ",
 			instrStr: "Swipe to discard question.\n",
-			greenColor: "#120078"
+			greenColor: "#120078",
+			course: "test",
+			instructor: "test",
+			date: this.getCurrentDate(),
+			currentQuestion: this.getCurrentQuestions()
 			//TODO: popup letting you know that you will get a notification
 		};
 		this.QColor = this.QColor();
+	}
+
+	getCurrentQuestions() {
+		return 'This is a placeholder for the current question'
+	}
+
+	getCurrentDate(separator = '/') {
+
+		let newDate = new Date()
+		let date = newDate.getDate();
+		let month = newDate.getMonth() + 1;
+		let year = newDate.getFullYear();
+
+		return `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date}`
 	}
 
 	QColor() {
@@ -27,34 +45,79 @@ class instructor extends Component {
 		if (count == 1) return "rgb(251, 236, 167)"
 		else return "rgb(246, 246, 246)"
 	}
-
-
+	removeItem(index) {
+		const remove = (index) => {
+			var newList = studQs
+			newList.splice(index, 1)
+			this.setList(newList);
+		};
+	}
 	render() {
 		const listItems = studQs.map((link) =>
 			<li key={link.endpoint}>
 				{link.endpoint}
 				<ButtonToolbar>
-					<Button style={color = "red", appearence = "ghost"}>
+					<Button style={{
+						backgroundColor: "rgb(39,94,37)",
+						color: "white",
+						border: "none",
+						borderRadius: "8px"
+					}}>
 						Clarify
 					</Button>
-					<Button color="red" appearence="primary">
-						Delete
+					<Button style={{
+						backgroundColor: "rgb(39,94,37)",
+						color: "white",
+						border: "none",
+						borderRadius: "8px",
+						marginLeft: "10px"
+					}}>
+						Dismiss
 					</Button>
 				</ButtonToolbar>
-			</li>
+			</li >
 		);
 		return (
 			<div>
 				<Container
 					style={{
-						backgroundColor: "rgb(39,94,37)",
-						opacity: 0.6,
-						padding: 10
+						backgroundColor: "rgb(39, 94, 57)",
+						padding: "15px"
+					}}
+				>
+					<div style={{
+						paddingBottom: 5,
+						textAlign: "center",
+						color: "white",
+						fontSize: "16px",
 					}}>
+						Course: {this.state.course}
+					</div>
+					<div style={{
+						paddingBottom: 5,
+						textAlign: "center",
+						color: "white",
+						fontSize: "16px"
+					}}>
+						Instructor: {this.state.instructor}
+					</div>
+					<div style={{
+						paddingBottom: 5,
+						textAlign: "center",
+						color: "white",
+						fontSize: "16px"
+					}}>
+						{this.state.date}
+					</div>
 				</Container>
-				<ul>
+				<List
+					style={{
+						listStyleType: "none",
+						padding: 15,
+						marginTop: "10px"
+					}}>
 					{listItems}
-				</ul>
+				</List>
 			</div>
 		);
 
