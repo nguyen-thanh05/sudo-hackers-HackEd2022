@@ -1,4 +1,4 @@
-async function addQuestion(sessionid_value) {
+async function addQuestion(sessionid_value, question_str) {
 	const dbName = "qna";
 	const url = `mongodb+srv://qna:randompassword@qna.wotxc.mongodb.net/qna-database?retryWrites=true&w=majority`;
 	var MongoClient = require("mongodb").MongoClient;
@@ -10,14 +10,20 @@ async function addQuestion(sessionid_value) {
 		let collection = ui.collection("queue");
 
 		//let array = await collection.findOne({sessionid: sessionid_value}, { projection: {_id: 0, question: 1}});
-		let array = await collection.aggregate({sessionid: sessionid_value}, {$size: "question"});
-		console.log(array);
+		const projection = { _id: 0, question: 1 };
+		const cursor = collection.find().project(projection);
+
+		//let array = await collection.aggregate({ sessionid: sessionid_value }, { $size: "question" });
+		for await (const doc of cursor) {
+			console.log(doc);
+		}
+		console.log(cursor.length);
 
 		let session = {
 			sessionid: sessionid_value
 		};
 
-		let pushvalue = {$push: {"question" : {1: "DVD"} }}
+		let pushvalue = { $push: { "question": { question_str } } }
 		await collection.updateOne(session, pushvalue);
 		//let docObj = await collection.findOne(doc);
 		//let docId = docObj._id;
@@ -28,7 +34,7 @@ async function addQuestion(sessionid_value) {
 	}
 }
 
-async function updateQuestion(qid_value, question_text) {
+async function updateQuestion(qid_value, question_str) {
 	const dbName = "qna";
 	const url = `mongodb+srv://qna:randompassword@qna.wotxc.mongodb.net/qna-database?retryWrites=true&w=majority`;
 	var MongoClient = require("mongodb").MongoClient;
@@ -40,7 +46,7 @@ async function updateQuestion(qid_value, question_text) {
 		let collection = ui.collection("queue");
 
 		let query = { qid: qid_value };
-		let values = { $set: {question: question_text}};
+		let values = { $set: { question: question_str } };
 
 		await collection.updateOne(query, values);
 		return 1;
@@ -60,7 +66,7 @@ async function deleteQuestion(qid_value) {
 		let db = await conn;
 		let ui = await db.db(dbName);
 		let collection = ui.collection("queue");
-		let query = { qid: qid_value }; 
+		let query = { qid: qid_value };
 
 		await collection.deleteOne(query);
 		return 1;
@@ -81,8 +87,8 @@ async function getQuestion(qid_value) {
 		let ui = await db.db(dbName);
 		let collection = ui.collection("queue");
 
-		let query = { qid: qid_value};
-		let projection = { projection: {_id: 0, question: 1}};	 
+		let query = { qid: qid_value };
+		let projection = { projection: { _id: 0, question: 1 } };
 		let question_value = await collection.findOne(query, projection);
 		console.log(question_value);
 		return question_value;
@@ -93,7 +99,7 @@ async function getQuestion(qid_value) {
 	}
 }
 
-async function createSessionDoc(profdoc){
+async function createSessionDoc(profdoc) {
 	const dbName = "qna";
 	const url = `mongodb+srv://qna:randompassword@qna.wotxc.mongodb.net/qna-database?retryWrites=true&w=majority`;
 	var MongoClient = require("mongodb").MongoClient;
@@ -118,11 +124,11 @@ async function createSessionDoc(profdoc){
 }
 
 function generateUID() {
-    var firstPart = (Math.random() * 46656) | 0;
-    var secondPart = (Math.random() * 46656) | 0;
-    firstPart = ("0" + firstPart.toString(36)).slice(-3);
-    secondPart = ("0" + secondPart.toString(36)).slice(-3);
-    return firstPart + secondPart;
+	var firstPart = (Math.random() * 46656) | 0;
+	var secondPart = (Math.random() * 46656) | 0;
+	firstPart = ("0" + firstPart.toString(36)).slice(-3);
+	secondPart = ("0" + secondPart.toString(36)).slice(-3);
+	return firstPart + secondPart;
 }
 
 const express = require("express");
@@ -136,6 +142,7 @@ const router = express.Router();
 app.use("/", router);
 
 const cors = require("cors");
+const { serialize } = require("bson");
 
 app.use(cors());
 
