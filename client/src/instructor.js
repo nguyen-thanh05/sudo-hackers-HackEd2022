@@ -57,16 +57,12 @@ class instructor extends Component {
 			<li key={link.endpoint}>
 				{link.endpoint}
 				<ButtonToolbar>
-<<<<<<< HEAD
 					<Button style={{
 						backgroundColor: "rgb(39,94,37)",
 						color: "white",
 						border: "none",
 						borderRadius: "8px"
 					}}>
-=======
-					<Button color = "red" appearence = "ghost">
->>>>>>> 84f0581a702ea3ef0328a1a94ff6faa3087088dc
 						Clarify
 					</Button>
 					<Button style={{

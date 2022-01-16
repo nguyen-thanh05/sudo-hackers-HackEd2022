@@ -7,6 +7,7 @@ import Home from "./Home";
 
 
 
+
 export class App extends Component {
 	render() {
 		let renderComponent;
