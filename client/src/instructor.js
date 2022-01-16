@@ -24,7 +24,7 @@ class instructor extends Component {
 		//queue.total((err, count) => {
 		//	console.log('This queue has seen %d messages', count)
 		//});
-		if (count == 1) return "rgb(251, 236, 167)"
+		if (count === 1) return "rgb(251, 236, 167)"
 		else return "rgb(246, 246, 246)"
 	}
 
@@ -34,7 +34,7 @@ class instructor extends Component {
 			<li key={link.endpoint}>
 				{link.endpoint}
 				<ButtonToolbar>
-					<Button style={color = "red", appearence = "ghost"}>
+					<Button color = "red" appearence = "ghost">
 						Clarify
 					</Button>
 					<Button color="red" appearence="primary">

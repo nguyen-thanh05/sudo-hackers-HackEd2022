@@ -114,7 +114,7 @@ class student extends Component {
                 </Button>
 
                 
-                <Modal full open={this.state.showForm} onClose={this.handleClose} style = {{position: "fixed", bottom: 25}}>
+                <Modal size="lg" open={this.state.showForm} onClose={this.handleClose}>
                     <Modal.Body>
                         <Form fluid>
                             <Form.Group controlId="question">
@@ -129,13 +129,12 @@ class student extends Component {
                                 padding: 7.5,
                                 fontSize: "20px",
                                 display:"block",
-                                margin:"10px"
                             }}/>
                         </Form.Group>
                         </Form>
                     </Modal.Body>
         
-                    <Modal.Footer style = {{position: "fixed", bottom: 15, right: 15}}>
+                    <Modal.Footer style = {{bottom: 10, right: 10, paddingTop:10}}>
                         <Button onClick={this.handleClose} appearance="primary" style = {
                                 {
                                     borderRadius: "8px",

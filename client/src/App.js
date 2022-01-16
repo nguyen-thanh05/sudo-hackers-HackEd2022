@@ -4,6 +4,7 @@ import history from "./History";
 import student from "./student";
 import instructor from "./instructor";
 
+
 export class App extends Component {
 	render() {
 		let renderComponent;
