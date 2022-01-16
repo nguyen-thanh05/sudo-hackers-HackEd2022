@@ -42,7 +42,7 @@ class instructor extends Component {
 		//queue.total((err, count) => {
 		//	console.log('This queue has seen %d messages', count)
 		//});
-		if (count == 1) return "rgb(251, 236, 167)"
+		if (count === 1) return "rgb(251, 236, 167)"
 		else return "rgb(246, 246, 246)"
 	}
 	removeItem(index) {
@@ -57,12 +57,16 @@ class instructor extends Component {
 			<li key={link.endpoint}>
 				{link.endpoint}
 				<ButtonToolbar>
+<<<<<<< HEAD
 					<Button style={{
 						backgroundColor: "rgb(39,94,37)",
 						color: "white",
 						border: "none",
 						borderRadius: "8px"
 					}}>
+=======
+					<Button color = "red" appearence = "ghost">
+>>>>>>> 84f0581a702ea3ef0328a1a94ff6faa3087088dc
 						Clarify
 					</Button>
 					<Button style={{
