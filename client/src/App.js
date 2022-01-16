@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { Route, Switch, Router } from "react-router-dom";
 import history from "./History";
-import prof from "./prof";
+import student from "./student";
+import instructor from "./instructor";
+import Home from "./Home";
+
+
+
 
 export class App extends Component {
 	render() {
@@ -9,9 +14,16 @@ export class App extends Component {
 		renderComponent = (
 			<Router history={history}>
 				<Switch>
-					<Route path="/prof" exact component={prof} />
+					<Route path="/student" exact component={student} />
+				</Switch>
+				<Switch>
+					<Route path="/instructor" exact component={instructor} />
+				</Switch>
+				<Switch>
+					<Route path="/Home" exact component={Home} />
 				</Switch>
 			</Router>
+
 		);
 		return <div>{renderComponent}</div>;
 	}

@@ -45,7 +45,17 @@ class instructor extends Component {
 		if (count === 1) return "rgb(251, 236, 167)"
 		else return "rgb(246, 246, 246)"
 	}
+<<<<<<< HEAD
 
+=======
+	removeItem(index) {
+		const remove = (index) => {
+			var newList = studQs
+			newList.splice(index, 1)
+			this.setList(newList);
+		};
+	}
+>>>>>>> add-student-ui
 	render() {
 		const listItems = studQs.map((link) =>
 			<li key={link.endpoint}>
