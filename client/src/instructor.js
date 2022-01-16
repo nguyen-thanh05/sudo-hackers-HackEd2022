@@ -1,6 +1,12 @@
 import React, { Component } from "react";
-import { Button, Container } from "rsuite";
+import { Button, ButtonToolbar, Container } from "rsuite";
 import { count } from "rsuite/esm/utils/ReactChildren";
+var studQs = [
+	{ endpoint: 'america' },
+	{ endpoint: 'canada' },
+	{ endpoint: 'norway' },
+	{ endpoint: 'bahamas' }
+];
 
 class instructor extends Component {
 	constructor(props) {
@@ -21,7 +27,22 @@ class instructor extends Component {
 		if (count == 1) return "rgb(251, 236, 167)"
 		else return "rgb(246, 246, 246)"
 	}
+
+
 	render() {
+		const listItems = studQs.map((link) =>
+			<li key={link.endpoint}>
+				{link.endpoint}
+				<ButtonToolbar>
+					<Button style={color = "red", appearence = "ghost"}>
+						Clarify
+					</Button>
+					<Button color="red" appearence="primary">
+						Delete
+					</Button>
+				</ButtonToolbar>
+			</li>
+		);
 		return (
 			<div>
 				<Container
@@ -30,10 +51,13 @@ class instructor extends Component {
 						opacity: 0.6,
 						padding: 10
 					}}>
-
 				</Container>
+				<ul>
+					{listItems}
+				</ul>
 			</div>
 		);
+
 	}
 }
 
