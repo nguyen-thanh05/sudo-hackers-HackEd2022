@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, Container } from "rsuite";
+import { Button, Container, Form, Modal } from "rsuite";
+
 
 class student extends Component {
 	constructor(props) {
@@ -8,9 +9,17 @@ class student extends Component {
 			course: "test",
             instructor: "test",
             date: this.getCurrentDate(),
-            currentQuestion: this.getCurrentQuestion()
+            currentQuestion: this.getCurrentQuestion(),
+            showForm: false,
+            showAskButton: true
+            
 		};
+
+        this.handleAskQuestionButtonClick =  this.handleAskQuestionButtonClick.bind(this);
+        this.handleClose = this.handleClose.bind(this);
 	}
+
+
     getCurrentQuestion() {
         return 'This is a placeholder for the current question'
     }
@@ -24,6 +33,15 @@ class student extends Component {
         return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`
     }
 
+    handleAskQuestionButtonClick() {
+        this.setState({showForm: true});
+        this.setState({showAskButton: false});
+    }
+    handleClose() {
+        this.setState({showForm: false});
+        this.setState({showAskButton: true});
+    }
+    
 	render() {
 		return (
 			<div>
@@ -55,25 +73,79 @@ class student extends Component {
                         {this.state.date}
                     </div>
                 </Container>
-                <div style = {{
-                    paddingLeft:20,
-                    paddingTop:10,
-                    textAlign: "left",
-                    fontSize: "20px",
-                    fontStyle: "italic"
-                }}>
-                    Current Question: 
-                </div>
+                <Container fixed>
+                    <div style = {{
+                        paddingLeft:20,
+                        paddingTop:10,
+                        textAlign: "left",
+                        fontSize: "20px",
+                        fontStyle: "italic"
+                    }}>
+                        Current Question: 
+                    </div>
 
-                <div style = {{
-                    paddingLeft:30,
-                    paddingTop:10,
-                    textAlign: "left",
-                    fontSize: "22px",
-                    fontWeight: "bold"
-                }}>
-                    {this.state.currentQuestion} 
-                </div>
+                    <div style = {{
+                        paddingLeft:30,
+                        paddingTop:10,
+                        textAlign: "left",
+                        fontSize: "22px",
+                        fontWeight: "bold"
+                    }}>
+                        {this.state.currentQuestion} 
+                    </div>
+                </Container>
+                <Button
+                    onClick = {this.handleAskQuestionButtonClick}
+                    open = {this.state.showAskButton}
+                    style = {
+                        this.state.showAskButton ? {
+                            position: "fixed",
+                            right: 15,
+                            bottom: 15,
+                            borderRadius: "8px",
+                            backgroundColor: "rgb(39, 94, 57)",
+                            color: "white",
+                            fontSize: "18px",
+                            padding: "12px"
+                        } : {display: 'none'}
+                    }
+                >
+                    Click here to ask a question
+                </Button>
+
+                
+                <Modal full open={this.state.showForm} onClose={this.handleClose} style = {{position: "fixed", bottom: 15}}>
+                    <Modal.Body>
+                        <p>test</p>
+                    </Modal.Body>
+        
+                    <Modal.Footer style = {{position: "fixed", bottom: 15, right: 15}}>
+                        <Button onClick={this.handleClose} appearance="primary" style = {
+                                {
+                                    borderRadius: "8px",
+                                    backgroundColor: "rgb(39, 94, 57)",
+                                    color: "white",
+                                    fontSize: "16px",
+                                    padding: "10px",
+                                    marginRight:"5px"                                    
+                                }
+                            }>
+                            Post
+                        </Button>
+                        <Button onClick={this.handleClose} appearance="subtle" style = {
+                                {
+                                    borderRadius: "8px",
+                                    backgroundColor: "rgb(39, 94, 57)",
+                                    color: "white",
+                                    fontSize: "16px",
+                                    padding: "10px"
+                                }
+                            }>
+                            Cancel
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
 			</div>
             
 		);
