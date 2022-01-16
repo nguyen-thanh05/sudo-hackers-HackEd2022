@@ -20,7 +20,7 @@ class student extends Component {
         this.handleAskQuestionButtonClick =  this.handleAskQuestionButtonClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleEditQuestionButton = this.handleEditQuestionButton.bind(this);
-        this.handleClarificationButton = this.handleClarificationButton.bind(this);
+        //this.handleClarificationButton = this.handleClarificationButton.bind(this);
         
 	}
 
@@ -44,9 +44,11 @@ class student extends Component {
     handleEditQuestionButton() {
         this.setState({showEditForm: true});
     }
+    /*
     handleClarificationButton() {
         this.setState({showClarificationForm: true});
     }
+    */
     handleAskQuestionButtonClick() {
         this.setState({showAskQuestionForm: true});
         this.setState({showAskButton: false});
@@ -111,7 +113,7 @@ class student extends Component {
                     }}>
                         {this.state.currentQuestion} 
                     </div>
-
+                    {/*
                     <div style = {{
                         paddingLeft:50,
                         paddingTop:10,
@@ -121,6 +123,7 @@ class student extends Component {
                     }}>
                         Clarification placeholder 
                     </div>
+                    */}
                 </Container>
                     
                     <div style = {{
@@ -155,7 +158,8 @@ class student extends Component {
                     }>
                         {this.state.yourQuestion == null ? "Your question will be displayed here" : this.state.yourQuestion}
                     </div>
-
+ 
+                    {/*
                     <div style = {{
                         paddingLeft:50,
                         paddingTop:10,
@@ -165,8 +169,10 @@ class student extends Component {
                     }}>
                         No other clarifications 
                     </div>
+                */}
                     <ButtonToolbar>
-                    <Button onClick = {this.handleClarificationButton} disabled= {this.state.yourQuestion == null} style = {{
+                    
+                    {/*<Button onClick = {this.handleClarificationButton} disabled= {this.state.yourQuestion == null} style = {{
                             margin:"5px",
                             borderRadius: "8px",
                             backgroundColor: "rgb(39, 94, 57)",
@@ -175,6 +181,7 @@ class student extends Component {
                             padding: "8px"
                         }}>
                             Add clarification</Button>
+                    */}
 
 
                     <Button onClick = {this.handleEditQuestionButton} disabled= {this.state.yourQuestion == null}
@@ -268,7 +275,7 @@ class student extends Component {
                     </Modal.Footer>
                 </Modal>
 
-                
+                {/*
                 <Modal size="lg" open={this.state.showClarificationForm} onClose={this.handleClose}>
                     <Modal.Body>
                         <Form fluid>
@@ -315,7 +322,7 @@ class student extends Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-
+                        */}
                 <Modal size="lg" open={this.state.showEditForm} onClose={this.handleClose}>
                     <Modal.Body>
                         <Form fluid >
