@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Container, Form, Modal } from "rsuite";
+import { Button, Container, Form, Modal, Dropdown, ButtonToolbar } from "rsuite";
 
 
 class student extends Component {
@@ -11,16 +11,20 @@ class student extends Component {
             date: this.getCurrentDate(),
             currentQuestion: this.getCurrentQuestion(),
             yourQuestion: this.getYourQuestion(),
-            showForm: false,
-            showAskButton: true
-            
+            showAskQuestionForm: false,
+            showAskButton: true,
+            showClarificationForm: false,
+            showEditForm: false
 		};
 
         this.handleAskQuestionButtonClick =  this.handleAskQuestionButtonClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleEditQuestionButton = this.handleEditQuestionButton.bind(this);
+        this.handleClarificationButton = this.handleClarificationButton.bind(this);
+        
 	}
 
-
+    
     getCurrentQuestion() {
         return 'This is a placeholder for the current question'
     }
@@ -37,13 +41,21 @@ class student extends Component {
         return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`
     }
 
+    handleEditQuestionButton() {
+        this.setState({showEditForm: true});
+    }
+    handleClarificationButton() {
+        this.setState({showClarificationForm: true});
+    }
     handleAskQuestionButtonClick() {
-        this.setState({showForm: true});
+        this.setState({showAskQuestionForm: true});
         this.setState({showAskButton: false});
     }
     handleClose() {
-        this.setState({showForm: false});
+        this.setState({showAskQuestionForm: false});
         this.setState({showAskButton: true});
+        this.setState({showEditForm: false});
+        this.setState({showClarificationForm: false});
     }
     
 	render() {
@@ -120,7 +132,8 @@ class student extends Component {
                     }}>
                         Your Question: 
                     </div>
-
+                    
+                    <Container>
                     <div style = {
                         this.state.yourQuestion == null ? 
                             {
@@ -143,9 +156,49 @@ class student extends Component {
                         {this.state.yourQuestion == null ? "Your question will be displayed here" : this.state.yourQuestion}
                     </div>
 
-                    
-                <Container>
+                    <div style = {{
+                        paddingLeft:50,
+                        paddingTop:10,
+                        textAlign: "left",
+                        fontSize: "18px",
+                        color: "rgb(192, 192, 192)"
+                    }}>
+                        No other clarifications 
+                    </div>
+                    <ButtonToolbar>
+                    <Button onClick = {this.handleClarificationButton} disabled= {this.state.yourQuestion == null} style = {{
+                            margin:"5px",
+                            borderRadius: "8px",
+                            backgroundColor: "rgb(39, 94, 57)",
+                            color: "white",
+                            fontSize: "16px",
+                            padding: "8px"
+                        }}>
+                            Add clarification</Button>
 
+
+                    <Button onClick = {this.handleEditQuestionButton} disabled= {this.state.yourQuestion == null}
+                    style = {{
+                        margin:"5px",
+                        borderRadius: "8px",
+                        backgroundColor: "rgb(39, 94, 57)",
+                        color: "white",
+                        fontSize: "16px",
+                        padding: "8px"
+                    }}>
+                        Edit question</Button>
+
+
+                    <Dropdown disabled= {this.state.yourQuestion == null} title="Dismiss question" style = {{
+                            margin:"5px",
+                            color: "red",
+                            fontSize: "16px",
+                            padding: "8px"
+                        }}>
+                        <Dropdown.Item>Question already answered</Dropdown.Item>
+                        <Dropdown.Item>Other reasons</Dropdown.Item>
+                    </Dropdown>
+                    </ButtonToolbar>
                 </Container>
 
                 <Button
@@ -168,7 +221,7 @@ class student extends Component {
                 </Button>
 
                 
-                <Modal size="lg" open={this.state.showForm} onClose={this.handleClose}>
+                <Modal size="lg" open={this.state.showAskQuestionForm} onClose={this.handleClose}>
                     <Modal.Body>
                         <Form fluid>
                             <Form.Group controlId="question">
@@ -215,6 +268,100 @@ class student extends Component {
                     </Modal.Footer>
                 </Modal>
 
+                
+                <Modal size="lg" open={this.state.showClarificationForm} onClose={this.handleClose}>
+                    <Modal.Body>
+                        <Form fluid>
+                            <Form.Group controlId="clarification">
+                            <Form.ControlLabel style = {{
+                                paddingLeft:20,
+                                paddingBottom:20,
+                                textAlign: "left",
+                                fontSize: "22px",
+                                fontStyle: "italic"
+                            }}>Ask your clarification here</Form.ControlLabel>
+                            <Form.Control name="clarification" style = {{
+                                padding: 7.5,
+                                fontSize: "20px",
+                                display:"block",
+                            }}/>
+                        </Form.Group>
+                        </Form>
+                    </Modal.Body>
+        
+                    <Modal.Footer style = {{bottom: 10, right: 10, paddingTop:10}}>
+                        <Button onClick={this.handleClose} appearance="primary" style = {
+                                {
+                                    borderRadius: "8px",
+                                    backgroundColor: "rgb(39, 94, 57)",
+                                    color: "white",
+                                    fontSize: "16px",
+                                    padding: "10px",
+                                    marginRight:"5px"                                    
+                                }
+                            }>
+                            Post
+                        </Button>
+                        <Button onClick={this.handleClose} appearance="subtle" style = {
+                                {
+                                    borderRadius: "8px",
+                                    backgroundColor: "rgb(39, 94, 57)",
+                                    color: "white",
+                                    fontSize: "16px",
+                                    padding: "10px"
+                                }
+                            }>
+                            Cancel
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal size="lg" open={this.state.showEditForm} onClose={this.handleClose}>
+                    <Modal.Body>
+                        <Form fluid >
+                            <Form.Group controlId="question">
+                            <Form.ControlLabel style = {{
+                                paddingLeft:20,
+                                paddingBottom:20,
+                                textAlign: "left",
+                                fontSize: "22px",
+                                fontStyle: "italic"
+                            }}>Edit your question here</Form.ControlLabel>
+                            <Form.Control value={this.state.yourQuestion} name="question" style = {{
+                                padding: 7.5,
+                                fontSize: "20px",
+                                display:"block",
+                            }}/>
+                        </Form.Group>
+                        </Form>
+                    </Modal.Body>
+        
+                    <Modal.Footer style = {{bottom: 10, right: 10, paddingTop:10}}>
+                        <Button onClick={this.handleClose} appearance="primary" style = {
+                                {
+                                    borderRadius: "8px",
+                                    backgroundColor: "rgb(39, 94, 57)",
+                                    color: "white",
+                                    fontSize: "16px",
+                                    padding: "10px",
+                                    marginRight:"5px"                                    
+                                }
+                            }>
+                            Post
+                        </Button>
+                        <Button onClick={this.handleClose} appearance="subtle" style = {
+                                {
+                                    borderRadius: "8px",
+                                    backgroundColor: "rgb(39, 94, 57)",
+                                    color: "white",
+                                    fontSize: "16px",
+                                    padding: "10px"
+                                }
+                            }>
+                            Cancel
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
 			</div>
             
 		);
