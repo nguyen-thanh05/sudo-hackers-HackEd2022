@@ -6,6 +6,7 @@ import instructor from "./instructor";
 import Home from "./Home";
 
 
+
 export class App extends Component {
 	render() {
 		let renderComponent;
